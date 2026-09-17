@@ -9,7 +9,6 @@ const CreateLoanSchema = z.object({
   annualRate: z.number().min(0).max(100),
   tenureMonths: z.number().int().min(3).max(36),
   startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Format: YYYY-MM-DD"),
-  userId: z.string().uuid(),
 });
 
 const CreatePaymentSchema = z.object({
@@ -20,11 +19,11 @@ const CreatePaymentSchema = z.object({
 
 export const loanService = {
   async createLoan(data: any) {
-    const { userId, principalPaise, annualRate, tenureMonths, startDate } = CreateLoanSchema.parse(data);
+    const { principalPaise, annualRate, tenureMonths, startDate } = CreateLoanSchema.parse(data);
     const schedule = generateSchedule(principalPaise, annualRate, tenureMonths, startDate);
 
     return loanRepository.createLoanWithSchedule(
-      { userId, principalPaise, annualRate: annualRate.toFixed(2), tenureMonths, startDate },
+      { userId: data.userId, principalPaise, annualRate: annualRate.toFixed(2), tenureMonths, startDate },
       schedule
     );
   },
