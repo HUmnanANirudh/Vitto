@@ -4,22 +4,21 @@ export default function ScheduleTable({
   installments: any[];
 }) {
   return (
-    <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
-      <div className="border-b border-gray-200 bg-white px-6 py-4">
-        <h2 className="text-lg font-bold text-gray-900">Repayment Schedule</h2>
-        <p className="text-sm text-gray-500">Track all past and upcoming installments.</p>
+    <div className="flex h-full flex-col">
+      <div className="mb-4 shrink-0">
+        <h2 className="text-lg font-bold text-black">Repayment Schedule</h2>
       </div>
-      <div className="overflow-x-auto">
-        <table className="w-full text-left text-sm whitespace-nowrap">
-          <thead className="bg-gray-50/50">
+      <div className="flex-1 overflow-auto border-t border-gray-200">
+        <table className="w-full text-left text-sm ">
+          <thead className="sticky top-0 bg-white shadow-[0_1px_0_0_#e5e7eb]">
             <tr>
-              <th className="px-6 py-4 font-semibold text-gray-900">#</th>
-              <th className="px-6 py-4 font-semibold text-gray-900">Due Date</th>
-              <th className="px-6 py-4 text-right font-semibold text-gray-900">Principal</th>
-              <th className="px-6 py-4 text-right font-semibold text-gray-900">Interest</th>
-              <th className="px-6 py-4 text-right font-semibold text-gray-900">Total Due</th>
-              <th className="px-6 py-4 text-right font-semibold text-gray-900">Paid</th>
-              <th className="px-6 py-4 text-center font-semibold text-gray-900">Status</th>
+              <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-gray-500">#</th>
+              <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-gray-500">Due Date</th>
+              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-gray-500">Principal</th>
+              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-gray-500">Interest</th>
+              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-gray-500 whitespace-nowrap">Total Due</th>
+              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-gray-500">Paid</th>
+              <th className="px-4 py-3 text-center text-xs font-semibold uppercase tracking-wider text-gray-500">Status</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
@@ -34,35 +33,29 @@ export default function ScheduleTable({
               return (
                 <tr
                   key={inst.id}
-                  className={`transition-colors hover:bg-gray-50/80 ${isOverdue ? "bg-red-50/30" : ""}`}
+                  className={`group transition-colors hover:bg-gray-50 ${isOverdue ? "bg-red-50/20" : ""}`}
                 >
-                  <td className="px-6 py-4 text-gray-500">{inst.installmentNumber}</td>
-                  <td className="px-6 py-4 font-medium text-gray-900">{new Date(inst.dueDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
-                  <td className="px-6 py-4 text-right text-gray-600">
+                  <td className="px-4 py-3 text-gray-500">{inst.installmentNumber}</td>
+                  <td className="px-4 py-3 font-medium text-black">{new Date(inst.dueDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
+                  <td className="px-4 py-3 text-right text-gray-600">
                     ₹{(inst.principalPaise / 100).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                   </td>
-                  <td className="px-6 py-4 text-right text-gray-600">
+                  <td className="px-4 py-3 text-right text-gray-600">
                     ₹{(inst.interestPaise / 100).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                   </td>
-                  <td className="px-6 py-4 text-right font-semibold text-gray-900">
+                  <td className="px-4 py-3 text-right font-medium text-black">
                     ₹{(totalDue / 100).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                   </td>
-                  <td className="px-6 py-4 text-right font-medium text-green-600">
+                  <td className="px-4 py-3 text-right font-medium text-green-600">
                     ₹{(totalPaid / 100).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-4 py-3 text-center">
                     {isFullyPaid ? (
-                      <span className="inline-flex items-center rounded-full bg-green-50 px-2.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                        Paid
-                      </span>
+                      <span className="text-xs font-medium text-green-600">Paid</span>
                     ) : isOverdue ? (
-                      <span className="inline-flex items-center rounded-full bg-red-50 px-2.5 py-0.5 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                        Overdue
-                      </span>
+                      <span className="text-xs font-medium text-red-600">Overdue</span>
                     ) : (
-                      <span className="inline-flex items-center rounded-full bg-yellow-50 px-2.5 py-0.5 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
-                        Pending
-                      </span>
+                      <span className="text-xs font-medium text-gray-500">Pending</span>
                     )}
                   </td>
                 </tr>

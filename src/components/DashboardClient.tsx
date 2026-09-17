@@ -4,11 +4,10 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import LoanListTable from "./LoanListTable";
 import { auth } from "@/lib/firebase";
-import Navbar from "./Navbar";
 import toast from "react-hot-toast";
 
 export default function DashboardClient() {
-  const { user, loading, signOut } = useAuth();
+  const { user, loading } = useAuth();
   const [loans, setLoans] = useState<any[]>([]);
   const [hasFetched, setHasFetched] = useState(false);
 
@@ -36,23 +35,21 @@ export default function DashboardClient() {
 
   if (loading || !user) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-blue-600"></div>
+      <div className="flex h-full flex-1 items-center justify-center bg-white">
+        <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-black"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans text-gray-900">
-      <Navbar />
-      <main className="mx-auto max-w-5xl px-6 py-10">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">Loans Dashboard</h1>
-          <p className="mt-1 text-sm text-gray-500">Manage your active loans and payment schedules.</p>
-        </div>
-        
+    <main className="mx-auto flex w-full flex-1 max-w-5xl flex-col px-4 sm:px-6 py-6 sm:py-8 lg:h-full lg:overflow-hidden">
+      <div className="mb-6 shrink-0">
+        <h1 className="text-2xl font-bold tracking-tight text-black">Active Loans</h1>
+      </div>
+      
+      <div className="flex-1 lg:overflow-hidden pb-8">
         <LoanListTable loans={loans} />
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }
