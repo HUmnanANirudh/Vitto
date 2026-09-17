@@ -4,7 +4,7 @@ import { eq, asc, sql } from "drizzle-orm";
 import { InstallmentBalance, AllocationEntry } from "@/types";
 
 export const loanRepository = {
-  async createLoanWithSchedule(loanData: any, scheduleData: any[]) {
+  async createLoanWithSchedule(loanData: any  , scheduleData: any[] /* eslint-disable-line @typescript-eslint/no-explicit-any */) {
     return db.transaction(async (tx) => {
       const [loan] = await tx.insert(loans).values(loanData).returning();
       await tx.insert(installments).values(scheduleData.map((s) => ({ ...s, loanId: loan.id })));

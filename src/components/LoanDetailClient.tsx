@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
+import { useCallback } from "react";
 import Link from "next/link";
 import PositionCards from "./PositionCards";
 import PaymentForm from "./PaymentForm";
@@ -10,16 +12,17 @@ import toast from "react-hot-toast";
 
 export default function LoanDetailClient({ loanId }: { loanId: string }) {
   const { user, loading, getToken } = useAuth();
-  const [data, setData] = useState<any>(null);
+  const router = useRouter();
+  const [data, setData] = useState<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
 
   const [amount, setAmount] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    if (!loading && !user) window.location.href = "/login";
-  }, [user, loading]);
+    if (!loading && !user) router.push("/login");
+  }, [user, loading, router]);
 
-  const loadLoan = async () => {
+  const loadLoan = useCallback(async () => {
     try {
       const token = await getToken();
       const res = await fetch(`/api/loans/${loanId}`, {
@@ -27,14 +30,18 @@ export default function LoanDetailClient({ loanId }: { loanId: string }) {
       });
       if (!res.ok) throw new Error("Failed to load loan details");
       setData(await res.json());
-    } catch (err: any) {
-      toast.error(err.message);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Unknown error";
+      toast.error(message);
     }
-  };
+  }, [getToken, loanId]);
 
   useEffect(() => {
-    if (user?.uid) loadLoan();
-  }, [user?.uid, loanId]);
+    if (user?.uid) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      loadLoan();
+    }
+  }, [user?.uid, loadLoan]);
 
   const handlePayment = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,8 +68,10 @@ export default function LoanDetailClient({ loanId }: { loanId: string }) {
       setAmount("");
       toast.success("Payment recorded successfully!");
       await loadLoan();
-    } catch (err: any) {
-      toast.error(err.message);
+      loadLoan();
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Unknown error";
+      toast.error(message);
     } finally {
       setIsSubmitting(false);
     }

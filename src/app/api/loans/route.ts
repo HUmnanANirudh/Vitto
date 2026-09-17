@@ -10,20 +10,22 @@ export async function POST(req: Request) {
     const result = await loanService.createLoan({ ...body, userId: user.id });
 
     return NextResponse.json(result, { status: 201 });
-  } catch (error: any) {
-    if (error.message.startsWith("Unauthorized"))
-      return NextResponse.json({ error: error.message }, { status: 401 });
-    return NextResponse.json({ error: error.message }, { status: 400 });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    if (message.startsWith("Unauthorized"))
+      return NextResponse.json({ error: message }, { status: 401 });
+    return NextResponse.json({ error: message }, { status: 400 });
   }
 }
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     const loans = await loanService.getLoans();
     return NextResponse.json(loans);
-  } catch (error: any) {
-    if (error.message.startsWith("Unauthorized"))
-      return NextResponse.json({ error: error.message }, { status: 401 });
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    if (message.startsWith("Unauthorized"))
+      return NextResponse.json({ error: message }, { status: 401 });
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

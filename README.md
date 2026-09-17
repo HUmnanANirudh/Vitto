@@ -13,7 +13,6 @@ Follow these steps to run the application on a clean machine:
 
 2. **Configure environment:**
    Create a `.env` file in the root directory. Copy the structure from `.env.example`.
-   *Note: Real values and test account credentials are provided in the submission email.*
 
 3. **Set up the database:**
    Push the schema to your PostgreSQL database:
@@ -22,7 +21,7 @@ Follow these steps to run the application on a clean machine:
    ```
 
 4. **Add test data:**
-   Create a demo loan and user to test the interface:
+   Create a demo loan and to test the interface:
    ```bash
    npm run db:seed
    ```
@@ -31,7 +30,9 @@ Follow these steps to run the application on a clean machine:
    ```bash
    npm run dev
    ```
-   Open `http://localhost:3000` in your browser. Sign in using the test account.
+   Open `http://localhost:3000` in your browser. Sign in using the test account:
+   - **Email:** `demo@vitto.com`
+   - **Password:** `password123`
 
 ## Running Tests
 

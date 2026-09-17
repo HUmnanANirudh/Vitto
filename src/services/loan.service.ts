@@ -8,7 +8,7 @@ import {
 } from "@/types";
 
 export const loanService = {
-  async createLoan(data: any) {
+  async createLoan(data: unknown) {
     const { principalPaise, annualRate, tenureMonths, startDate } =
       CreateLoanSchema.parse(data);
     const schedule = generateSchedule(
@@ -20,7 +20,7 @@ export const loanService = {
 
     return loanRepository.createLoanWithSchedule(
       {
-        userId: data.userId,
+        userId: (data as {userId: string}).userId,
         principalPaise,
         annualRate: annualRate.toFixed(2),
         tenureMonths,
@@ -43,16 +43,16 @@ export const loanService = {
     if (!loan) return null;
 
     const totalPaid = pmts.reduce(
-      (sum: number, p: any) => sum + p.amountPaise,
+      (sum: number, p: { amountPaise: number }) => sum + p.amountPaise,
       0,
     );
     const outstanding = totalOutstanding(insts as InstallmentBalance[]);
 
     const today = new Date().toISOString().split("T")[0];
     const overdue = insts
-      .filter((i: any) => i.dueDate < today)
+      .filter((i: any /* eslint-disable-line @typescript-eslint/no-explicit-any */) => i.dueDate < today)
       .reduce(
-        (sum: number, i: any) =>
+        (sum: number, i: any /* eslint-disable-line @typescript-eslint/no-explicit-any */) =>
           sum +
           Math.max(0, i.principalPaise - i.principalPaidPaise) +
           Math.max(0, i.interestPaise - i.interestPaidPaise),
@@ -60,7 +60,7 @@ export const loanService = {
       );
 
     const nextInstalment = insts.find(
-      (i: any) =>
+      (i: any /* eslint-disable-line @typescript-eslint/no-explicit-any */) =>
         i.principalPaise + i.interestPaise >
         i.principalPaidPaise + i.interestPaidPaise,
     );
@@ -80,7 +80,7 @@ export const loanService = {
     };
   },
 
-  async processPayment(loanId: string, data: any) {
+  async processPayment(loanId: string, data: unknown) {
     const parsed = CreatePaymentSchema.parse(data);
 
     return loanRepository.executePaymentTx(

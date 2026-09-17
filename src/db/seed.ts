@@ -5,7 +5,7 @@ import { Pool } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-serverless";
 import { users, loans, installments, payments, paymentAllocations } from "./schema";
 import { generateSchedule, calculateEMI } from "../lib/emi";
-import { eq } from "drizzle-orm";
+
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL! });
 const db = drizzle({ client: pool });

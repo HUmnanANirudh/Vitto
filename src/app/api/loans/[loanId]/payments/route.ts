@@ -13,14 +13,15 @@ export async function POST(
     const result = await loanService.processPayment(p.loanId, body);
 
     return NextResponse.json(result, { status: 201 });
-  } catch (error: any) {
-    if (error.message.startsWith("Unauthorized"))
-      return NextResponse.json({ error: error.message }, { status: 401 });
-    if (error.code === "23505")
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    if (message.startsWith("Unauthorized"))
+      return NextResponse.json({ error: message }, { status: 401 });
+    if ((error as {code?: string}).code === "23505")
       return NextResponse.json(
         { error: "Duplicate payment reference" },
         { status: 409 },
       );
-    return NextResponse.json({ error: error.message }, { status: 400 });
+    return NextResponse.json({ error: message }, { status: 400 });
   }
 }

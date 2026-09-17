@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import LoanListTable from "./LoanListTable";
 import { auth } from "@/lib/firebase";
@@ -8,12 +9,13 @@ import toast from "react-hot-toast";
 
 export default function DashboardClient() {
   const { user, loading } = useAuth();
-  const [loans, setLoans] = useState<any[]>([]);
+  const router = useRouter();
+  const [loans, setLoans] = useState<Record<string, unknown>[]>([]);
   const [hasFetched, setHasFetched] = useState(false);
 
   useEffect(() => {
-    if (!loading && !user) window.location.href = "/login";
-  }, [user, loading]);
+    if (!loading && !user) router.push("/login");
+  }, [user, loading, router]);
 
   useEffect(() => {
     async function loadLoans() {
@@ -26,8 +28,8 @@ export default function DashboardClient() {
         if (!res.ok) throw new Error("Failed to load loans");
         setLoans(await res.json());
         setHasFetched(true);
-      } catch (err: any) {
-        toast.error(err.message);
+      } catch (err: unknown) {
+        toast.error(err instanceof Error ? err.message : "Unknown error");
       }
     }
     loadLoans();

@@ -1,4 +1,4 @@
-export default function PositionCards({ position }: { position: any }) {
+export default function PositionCards({ position }: { position: any /* eslint-disable-line @typescript-eslint/no-explicit-any */ }) {
   return (
     <div className="grid grid-cols-1 divide-y divide-gray-200 border-y border-gray-200 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
       <div className="px-4 py-6 sm:px-6">

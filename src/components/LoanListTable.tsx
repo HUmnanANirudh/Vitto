@@ -1,7 +1,7 @@
 
 import Link from "next/link";
 
-export default function LoanListTable({ loans }: { loans: any[] }) {
+export default function LoanListTable({ loans }: { loans: any[] /* eslint-disable-line @typescript-eslint/no-explicit-any */ }) {
   return (
     <div className="h-full overflow-auto border-t border-gray-200">
       <table className="w-full text-left text-sm ">

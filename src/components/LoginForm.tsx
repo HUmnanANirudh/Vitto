@@ -43,8 +43,9 @@ export default function LoginForm() {
       await signInWithEmailAndPassword(auth, email, password);
       toast.success("Successfully logged in!");
       router.push("/dashboard");
-    } catch (err: any) {
-      toast.error(formatAuthError(err.message));
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Unknown error";
+      toast.error(formatAuthError(message));
       setIsSubmitting(false);
     }
   };
@@ -56,8 +57,9 @@ export default function LoginForm() {
       await signInWithPopup(auth, provider);
       toast.success("Successfully logged in!");
       router.push("/dashboard");
-    } catch (err: any) {
-      toast.error(formatAuthError(err.message));
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Unknown error";
+      toast.error(formatAuthError(message));
       setIsSubmitting(false);
     }
   };

@@ -7,7 +7,7 @@ export default function Gradient({ children }: { children?: React.ReactNode }) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let app: any = null;
+    let app: unknown = null;
     let initialized = false;
 
     const initTubes = async () => {
@@ -19,10 +19,10 @@ export default function Gradient({ children }: { children?: React.ReactNode }) {
         return;
 
       try {
-        const module =
+        const moduleInstance =
           await import("threejs-components/build/cursors/tubes1.min.js");
-        const TubesCursor = module.default || module;
-        app = TubesCursor(canvasRef.current, {
+        const TubesCursor = moduleInstance.default || moduleInstance;
+        app = (TubesCursor as /* eslint-disable-line @typescript-eslint/no-explicit-any */ any)(canvasRef.current, {
           tubes: {
             colors: ["#2563eb", "#6366f1", "#8b5cf6"],
             lights: {
@@ -32,7 +32,7 @@ export default function Gradient({ children }: { children?: React.ReactNode }) {
           },
         });
         initialized = true;
-      } catch (e) {
+      } catch (e: unknown) {
         console.error("Failed to load TubesCursor", e);
       }
     };
@@ -46,8 +46,8 @@ export default function Gradient({ children }: { children?: React.ReactNode }) {
     }
     return () => {
       resizeObserver.disconnect();
-      if (app && typeof app.destroy === "function") {
-        app.destroy();
+      if (app && typeof (app as /* eslint-disable-line @typescript-eslint/no-explicit-any */ any).destroy === "function") {
+        (app as /* eslint-disable-line @typescript-eslint/no-explicit-any */ any).destroy();
       }
     };
   }, []);

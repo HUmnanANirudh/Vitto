@@ -1,4 +1,4 @@
 declare module 'threejs-components/build/cursors/tubes1.min.js' {
-  const TubesCursor: any;
+  const TubesCursor: unknown;
   export default TubesCursor;
 }

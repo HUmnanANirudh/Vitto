@@ -45,8 +45,9 @@ export default function SignupForm() {
       await updateProfile(userCred.user, { displayName: name });
       toast.success("Account created successfully!");
       router.push("/dashboard");
-    } catch (err: any) {
-      toast.error(formatAuthError(err.message));
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Unknown error";
+      toast.error(formatAuthError(message));
       setIsSubmitting(false);
     }
   };
@@ -58,8 +59,9 @@ export default function SignupForm() {
       await signInWithPopup(auth, provider);
       toast.success("Account created successfully!");
       router.push("/dashboard");
-    } catch (err: any) {
-      toast.error(formatAuthError(err.message));
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Unknown error";
+      toast.error(formatAuthError(message));
       setIsSubmitting(false);
     }
   };

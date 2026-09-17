@@ -1,7 +1,7 @@
 export default function ScheduleTable({
   installments,
 }: {
-  installments: any[];
+  installments: Record<string, unknown>[];
 }) {
   return (
     <div className="flex h-full flex-col">
@@ -22,7 +22,7 @@ export default function ScheduleTable({
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
-            {installments.map((inst: any) => {
+            {installments.map((inst: any /* eslint-disable-line @typescript-eslint/no-explicit-any */) => {
               const totalDue = inst.principalPaise + inst.interestPaise;
               const totalPaid = inst.principalPaidPaise + inst.interestPaidPaise;
               const isFullyPaid = totalPaid >= totalDue;

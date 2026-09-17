@@ -7,7 +7,7 @@ import { loans, installments, payments, paymentAllocations } from '@/db/schema';
 import { eq, inArray } from 'drizzle-orm';
 
 //to create mock Requests
-function mockRequest(method: string, body?: any, token: string | null = "valid-token") {
+function mockRequest(method: string, body?: unknown, token: string | null = "valid-token") {
   const headers = new Headers();
   if (token) headers.set('Authorization', `Bearer ${token}`);
   return new Request('http://localhost:3000', {
