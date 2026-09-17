@@ -9,7 +9,7 @@ export default function PaymentForm({
   error,
 }: PaymentFormProps) {
   return (
-    <div className="mb-8 rounded-lg border bg-white p-6 shadow-sm">
+    <div className="mb-8 rounded-lg border bg-white p-6 shadow-sm text-gray-900">
       <h2 className="mb-4 text-lg font-semibold">Record Payment</h2>
       <form onSubmit={onSubmit} className="flex items-start gap-4">
         <div className="flex-1">
@@ -18,7 +18,7 @@ export default function PaymentForm({
             step="0.01"
             min="0.01"
             placeholder="Amount (₹)"
-            className="w-full rounded border p-2"
+            className="w-full rounded border bg-white p-2 text-gray-900 placeholder-gray-400"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             required

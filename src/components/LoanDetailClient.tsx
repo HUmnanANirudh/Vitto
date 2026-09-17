@@ -76,7 +76,7 @@ export default function LoanDetailClient({ loanId }: { loanId: string }) {
   const { loan, position, installments } = data;
 
   return (
-    <div className="mx-auto max-w-5xl p-8">
+    <div className="mx-auto max-w-5xl p-8 text-gray-900">
       <div className="mb-6 flex items-center justify-between">
         <Link href="/dashboard" className="text-blue-600 hover:underline">
           &larr; Back to Dashboard

@@ -33,7 +33,7 @@ export default function DashboardClient() {
   if (loading || !user) return <div className="p-8">Loading...</div>;
 
   return (
-    <div className="mx-auto max-w-4xl p-8">
+    <div className="mx-auto max-w-4xl p-8 text-gray-900">
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Loans Dashboard</h1>
         <button onClick={signOut} className="text-gray-500 hover:text-gray-800">
