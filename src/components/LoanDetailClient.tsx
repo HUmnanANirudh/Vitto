@@ -35,8 +35,8 @@ export default function LoanDetailClient({ loanId }: { loanId: string }) {
   };
 
   useEffect(() => {
-    if (user) loadLoan();
-  }, [user, loanId]);
+    if (user?.uid) loadLoan();
+  }, [user?.uid, loanId]);
 
   const handlePayment = async (e: React.FormEvent) => {
     e.preventDefault();

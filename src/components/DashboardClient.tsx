@@ -4,10 +4,13 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import LoanListTable from "./LoanListTable";
 
+import { auth } from "@/lib/firebase";
+
 export default function DashboardClient() {
-  const { user, loading, getToken, signOut } = useAuth();
+  const { user, loading, signOut } = useAuth();
   const [loans, setLoans] = useState<any[]>([]);
   const [error, setError] = useState("");
+  const [hasFetched, setHasFetched] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) window.location.href = "/login";
@@ -15,20 +18,21 @@ export default function DashboardClient() {
 
   useEffect(() => {
     async function loadLoans() {
-      if (!user) return;
+      if (!user || hasFetched) return;
       try {
-        const token = await getToken();
+        const token = await auth.currentUser?.getIdToken();
         const res = await fetch("/api/loans", {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) throw new Error("Failed to load loans");
         setLoans(await res.json());
+        setHasFetched(true);
       } catch (err: any) {
         setError(err.message);
       }
     }
     loadLoans();
-  }, [user, getToken]);
+  }, [user, hasFetched]);
 
   if (loading || !user) {
     return (

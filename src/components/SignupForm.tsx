@@ -13,6 +13,7 @@ export default function SignupForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<{ name?: string; email?: string; password?: string }>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
   const handleSignup = async (e: React.FormEvent) => {
@@ -31,6 +32,7 @@ export default function SignupForm() {
     }
     
     setFieldErrors({});
+    setIsSubmitting(true);
 
     try {
       const userCred = await createUserWithEmailAndPassword(auth, email, password);
@@ -38,16 +40,19 @@ export default function SignupForm() {
       router.push("/dashboard");
     } catch (err: any) {
       setError(err.message);
+      setIsSubmitting(false);
     }
   };
 
   const handleGoogleLogin = async () => {
+    setIsSubmitting(true);
     try {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
       router.push("/dashboard");
     } catch (err: any) {
       setError(err.message);
+      setIsSubmitting(false);
     }
   };
 
@@ -65,6 +70,7 @@ export default function SignupForm() {
       setPassword={setPassword}
       onSubmit={handleSignup}
       onGoogleLogin={handleGoogleLogin}
+      isSubmitting={isSubmitting}
       altText="Already have an account?"
       altLinkText="Login"
       altLinkHref="/login"

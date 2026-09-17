@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { auth } from "@/lib/firebase";
 import { User, onAuthStateChanged, signOut as firebaseSignOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
@@ -18,15 +18,15 @@ export function useAuth() {
     return () => unsubscribe();
   }, []);
 
-  const getToken = async () => {
+  const getToken = useCallback(async () => {
     if (!auth.currentUser) return null;
     return await auth.currentUser.getIdToken();
-  };
+  }, []);
 
-  const signOut = async () => {
+  const signOut = useCallback(async () => {
     await firebaseSignOut(auth);
     router.push("/login");
-  };
+  }, [router]);
 
   return { user, loading, getToken, signOut };
 }

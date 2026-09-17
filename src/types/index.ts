@@ -68,6 +68,7 @@ export interface AuthFormProps {
   setPassword: (v: string) => void;
   onSubmit: (e: React.FormEvent) => void;
   onGoogleLogin: () => void;
+  isSubmitting?: boolean;
   altText: string;
   altLinkText: string;
   altLinkHref: string;

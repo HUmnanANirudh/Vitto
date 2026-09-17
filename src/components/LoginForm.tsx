@@ -12,6 +12,7 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<{ email?: string; password?: string }>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -29,22 +30,26 @@ export default function LoginForm() {
     }
     
     setFieldErrors({});
+    setIsSubmitting(true);
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
       router.push("/dashboard");
     } catch (err: any) {
       setError(err.message);
+      setIsSubmitting(false);
     }
   };
 
   const handleGoogleLogin = async () => {
+    setIsSubmitting(true);
     try {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
       router.push("/dashboard");
     } catch (err: any) {
       setError(err.message);
+      setIsSubmitting(false);
     }
   };
 
@@ -60,6 +65,7 @@ export default function LoginForm() {
       setPassword={setPassword}
       onSubmit={handleLogin}
       onGoogleLogin={handleGoogleLogin}
+      isSubmitting={isSubmitting}
       altText="Don't have an account?"
       altLinkText="Sign Up"
       altLinkHref="/signup"
