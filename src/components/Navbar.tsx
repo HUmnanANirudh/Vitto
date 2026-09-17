@@ -26,7 +26,7 @@ export default function Navbar() {
           <div className="flex items-center">
             <button 
               onClick={signOut} 
-              className="group flex h-9 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white/50 px-4 text-sm font-semibold text-gray-700 shadow-sm backdrop-blur-sm transition-all hover:border-red-200 hover:bg-red-50 hover:text-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 active:scale-95"
+              className="group flex h-9 cursor-pointer items-center justify-center gap-2 rounded-none border-none bg-transparent px-4 text-sm font-semibold text-gray-600 transition-colors hover:text-red-600 focus:outline-none active:scale-95"
             >
               <span>Sign out</span>
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-70 transition-transform group-hover:translate-x-0.5">

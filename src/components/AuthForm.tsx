@@ -24,7 +24,6 @@ export default function AuthForm({
         <h1 className="text-2xl font-extrabold tracking-tight text-gray-900">
           {title}
         </h1>
-        <p className="mt-1.5 text-sm text-gray-500">Please enter your details to continue.</p>
       </div>
 
       <form onSubmit={onSubmit} className="space-y-4">

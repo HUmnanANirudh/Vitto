@@ -6,16 +6,14 @@ import Link from "next/link";
 import PositionCards from "./PositionCards";
 import PaymentForm from "./PaymentForm";
 import ScheduleTable from "./ScheduleTable";
-
 import Navbar from "./Navbar";
+import toast from "react-hot-toast";
 
 export default function LoanDetailClient({ loanId }: { loanId: string }) {
   const { user, loading, getToken } = useAuth();
   const [data, setData] = useState<any>(null);
-  const [error, setError] = useState("");
 
   const [amount, setAmount] = useState("");
-  const [paymentError, setPaymentError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -31,7 +29,7 @@ export default function LoanDetailClient({ loanId }: { loanId: string }) {
       if (!res.ok) throw new Error("Failed to load loan details");
       setData(await res.json());
     } catch (err: any) {
-      setError(err.message);
+      toast.error(err.message);
     }
   };
 
@@ -41,7 +39,6 @@ export default function LoanDetailClient({ loanId }: { loanId: string }) {
 
   const handlePayment = async (e: React.FormEvent) => {
     e.preventDefault();
-    setPaymentError("");
     setIsSubmitting(true);
 
     try {
@@ -63,28 +60,19 @@ export default function LoanDetailClient({ loanId }: { loanId: string }) {
       if (!res.ok) throw new Error(resData.error || "Payment failed");
 
       setAmount("");
+      toast.success("Payment recorded successfully!");
       await loadLoan();
     } catch (err: any) {
-      setPaymentError(err.message);
+      toast.error(err.message);
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  if (loading || !user || (!data && !error)) {
+  if (loading || !user || !data) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-50">
         <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-blue-600"></div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50 p-8">
-        <div className="rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-600">
-          {error}
-        </div>
       </div>
     );
   }
@@ -121,7 +109,6 @@ export default function LoanDetailClient({ loanId }: { loanId: string }) {
               onSubmit={handlePayment}
               isSubmitting={isSubmitting}
               isClosed={loan.status === "CLOSED"}
-              error={paymentError}
             />
           </div>
         </div>

@@ -1,3 +1,4 @@
+
 import { PaymentFormProps } from "@/types";
 
 export default function PaymentForm({
@@ -6,7 +7,6 @@ export default function PaymentForm({
   onSubmit,
   isSubmitting,
   isClosed,
-  error,
 }: PaymentFormProps) {
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
@@ -33,7 +33,6 @@ export default function PaymentForm({
               disabled={isSubmitting || isClosed}
             />
           </div>
-          {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
         </div>
         <button
           type="submit"

@@ -79,5 +79,4 @@ export interface PaymentFormProps {
   onSubmit: (e: React.FormEvent) => void;
   isSubmitting: boolean;
   isClosed: boolean;
-  error: string;
 }
