@@ -3,13 +3,22 @@ config({ path: ".env" });
 
 import { Pool } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-serverless";
-import { users, loans, installments } from "./schema";
+import { users, loans, installments, payments, paymentAllocations } from "./schema";
 import { generateSchedule, calculateEMI } from "../lib/emi";
+import { eq } from "drizzle-orm";
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL! });
 const db = drizzle({ client: pool });
 
 async function seed() {
+  console.log("Cleaning up existing loans...\n");
+  
+  // Clear all loan-related data
+  await db.delete(paymentAllocations);
+  await db.delete(payments);
+  await db.delete(installments);
+  await db.delete(loans);
+
   console.log("Seeding database...\n");
 
   const [user] = await db
@@ -17,6 +26,10 @@ async function seed() {
     .values({
       email: "demo@vitto.com",
       name: "Demo User",
+    })
+    .onConflictDoUpdate({
+      target: users.email,
+      set: { name: "Demo User" }
     })
     .returning();
 
