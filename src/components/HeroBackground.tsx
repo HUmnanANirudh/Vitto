@@ -1,7 +1,6 @@
 export default function HeroBackground() {
   return (
     <>
-      {/* Background SVG 1 (Top) */}
       <svg xmlns="http://www.w3.org/2000/svg" width="460" height="233" fill="none" className="absolute top-0 left-1/2 -translate-x-1/2" style={{opacity: 1}}>
         <path stroke="url(#a)" d="M141.338 232.625V5.075"></path>
         <path stroke="url(#b)" d="M176.338 232.625V5.075"></path>
@@ -23,7 +22,6 @@ export default function HeroBackground() {
         </defs>
       </svg>
 
-      {/* Background SVG 2 (Bottom) */}
       <svg xmlns="http://www.w3.org/2000/svg" width="460" height="233" fill="none" className="absolute bottom-0 left-1/2 -translate-x-1/2 scale-y-[-1]" style={{opacity: 1}}>
         <path stroke="url(#a_btm)" d="M141.338 232.625V5.075"></path>
         <path stroke="url(#b_btm)" d="M176.338 232.625V5.075"></path>
@@ -45,7 +43,6 @@ export default function HeroBackground() {
         </defs>
       </svg>
 
-      {/* Background SVG 3 (Left) */}
       <svg className="absolute top-1/2 left-0 z-0 hidden -translate-y-1/2 md:block" width="200" height="444" viewBox="0 0 323 444" fill="none" xmlns="http://www.w3.org/2000/svg" style={{opacity: 1}}>
         <path d="M0 442.957L209.048 442.957C212.366 442.957 215.508 441.458 217.596 438.879L321.802 310.196" stroke="url(#paint0_linear_290_207)"></path>
         <path d="M0 1.19531L209.048 1.19557C212.366 1.19558 215.508 2.69391 217.596 5.27302L321.802 133.956" stroke="url(#paint1_linear_290_207)"></path>
@@ -60,8 +57,6 @@ export default function HeroBackground() {
           </linearGradient>
         </defs>
       </svg>
-
-      {/* Background SVG 4 (Right) */}
       <svg className="absolute top-1/2 right-0 z-0 hidden -translate-y-1/2 scale-x-[-1] md:block" width="200" height="444" viewBox="0 0 323 444" fill="none" xmlns="http://www.w3.org/2000/svg" style={{opacity: 1}}>
         <path d="M0 442.957L209.048 442.957C212.366 442.957 215.508 441.458 217.596 438.879L321.802 310.196" stroke="url(#paint0_linear_290_207_rt)"></path>
         <path d="M0 1.19531L209.048 1.19557C212.366 1.19558 215.508 2.69391 217.596 5.27302L321.802 133.956" stroke="url(#paint1_linear_290_207_rt)"></path>

@@ -40,10 +40,26 @@ export const CreatePaymentSchema = z.object({
 
 export type CreatePaymentInput = z.infer<typeof CreatePaymentSchema>;
 
+export const LoginSchema = z.object({
+  email: z.email("Please enter a valid email address"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+});
+
+export const SignupSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.email("Please enter a valid email address"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+});
+
 export interface AuthFormProps {
   title: string;
   buttonText: string;
-  error: string;
+  error: string | null;
+  fieldErrors?: {
+    name?: string;
+    email?: string;
+    password?: string;
+  };
   name?: string;
   setName?: (v: string) => void;
   email: string;

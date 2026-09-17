@@ -6,6 +6,7 @@ export default function AuthForm({
   title,
   buttonText,
   error,
+  fieldErrors,
   name,
   setName,
   email,
@@ -34,34 +35,41 @@ export default function AuthForm({
                 <input
                   type="text"
                   placeholder="John Doe"
-                  className="w-full rounded-md border border-gray-300 bg-white p-2.5 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className={`w-full rounded-md border bg-white p-2.5 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 ${
+                    fieldErrors?.name ? "border-red-500 focus:border-red-500 focus:ring-red-500" : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                  }`}
                   value={name || ""}
                   onChange={(e) => setName(e.target.value)}
                   required
                 />
+                {fieldErrors?.name && <p className="mt-1 text-xs text-red-500">{fieldErrors.name}</p>}
               </div>
             )}
             <div className="mb-4">
               <label className="mb-1 block text-sm font-medium text-gray-700">Email Address</label>
               <input
-                type="email"
+                type="text"
                 placeholder="name@example.com"
-                className="w-full rounded-md border border-gray-300 bg-white p-2.5 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className={`w-full rounded-md border bg-white p-2.5 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 ${
+                  fieldErrors?.email ? "border-red-500 focus:border-red-500 focus:ring-red-500" : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                }`}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                required
               />
+              {fieldErrors?.email && <p className="mt-1 text-xs text-red-500">{fieldErrors.email}</p>}
             </div>
             <div className="mb-6">
               <label className="mb-1 block text-sm font-medium text-gray-700">Password</label>
               <input
                 type="password"
                 placeholder="••••••••"
-                className="w-full rounded-md border border-gray-300 bg-white p-2.5 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className={`w-full rounded-md border bg-white p-2.5 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 ${
+                  fieldErrors?.password ? "border-red-500 focus:border-red-500 focus:ring-red-500" : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                }`}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                required
               />
+              {fieldErrors?.password && <p className="mt-1 text-xs text-red-500">{fieldErrors.password}</p>}
             </div>
             <button type="submit" className="w-full rounded-md bg-blue-600 py-2.5 font-medium text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
               {buttonText}

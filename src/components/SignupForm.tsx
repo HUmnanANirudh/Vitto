@@ -5,16 +5,33 @@ import { auth } from "@/lib/firebase";
 import { createUserWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import AuthForm from "./AuthForm";
+import { SignupSchema } from "@/types";
 
 export default function SignupForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<{ name?: string; email?: string; password?: string }>({});
   const router = useRouter();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+
+    const result = SignupSchema.safeParse({ name, email, password });
+    if (!result.success) {
+      const formatted = result.error.format();
+      setFieldErrors({
+        name: formatted.name?._errors[0],
+        email: formatted.email?._errors[0],
+        password: formatted.password?._errors[0],
+      });
+      return;
+    }
+    
+    setFieldErrors({});
+
     try {
       const userCred = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(userCred.user, { displayName: name });
@@ -39,6 +56,7 @@ export default function SignupForm() {
       title="Sign Up"
       buttonText="Create Account"
       error={error}
+      fieldErrors={fieldErrors}
       name={name}
       setName={setName}
       email={email}
