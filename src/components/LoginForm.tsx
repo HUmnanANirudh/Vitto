@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { auth } from "@/lib/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import AuthForm from "./AuthForm";
 
@@ -22,6 +22,16 @@ export default function LoginForm() {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(auth, provider);
+      router.push("/dashboard");
+    } catch (err: any) {
+      setError(err.message);
+    }
+  };
+
   return (
     <AuthForm
       title="Sign In"
@@ -32,6 +42,7 @@ export default function LoginForm() {
       password={password}
       setPassword={setPassword}
       onSubmit={handleLogin}
+      onGoogleLogin={handleGoogleLogin}
       altText="Don't have an account?"
       altLinkText="Sign Up"
       altLinkHref="/signup"

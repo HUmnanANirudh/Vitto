@@ -44,11 +44,14 @@ export interface AuthFormProps {
   title: string;
   buttonText: string;
   error: string;
+  name?: string;
+  setName?: (v: string) => void;
   email: string;
   setEmail: (v: string) => void;
   password: string;
   setPassword: (v: string) => void;
   onSubmit: (e: React.FormEvent) => void;
+  onGoogleLogin: () => void;
   altText: string;
   altLinkText: string;
   altLinkHref: string;
