@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
+    "boring-avatars": "^2.0.4",
     "dotenv": "^17.4.2",
     "drizzle-orm": "^1.0.0-rc.4",
     "firebase": "^12.19.0",
@@ -22,6 +23,7 @@
     "next": "16.3.5",
     "react": "19.2.8",
     "react-dom": "19.2.8",
+    "react-hot-toast": "^2.6.1",
     "three": "^0.186.0",
     "threejs-components": "^0.0.30",
     "zod": "^4.6.5"
@@ -42,6 +44,7 @@
     "unrs-resolver@1.12.2": true,
     "@firebase/util@1.15.3": true,
     "protobufjs@7.6.6": true,
+    "esbuild@0.28.2": true,
     "esbuild@0.25.12": true
   }
 }

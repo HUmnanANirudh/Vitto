@@ -54,7 +54,6 @@ export const SignupSchema = z.object({
 export interface AuthFormProps {
   title: string;
   buttonText: string;
-  error: string | null;
   fieldErrors?: {
     name?: string;
     email?: string;

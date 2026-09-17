@@ -7,9 +7,10 @@ import PositionCards from "./PositionCards";
 import PaymentForm from "./PaymentForm";
 import ScheduleTable from "./ScheduleTable";
 
+import Navbar from "./Navbar";
+
 export default function LoanDetailClient({ loanId }: { loanId: string }) {
   const { user, loading, getToken } = useAuth();
-
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState("");
 
@@ -92,21 +93,7 @@ export default function LoanDetailClient({ loanId }: { loanId: string }) {
 
   return (
     <div className="min-h-screen bg-gray-50 font-sans text-gray-900">
-      {/* Top Navigation */}
-      <header className="sticky top-0 z-10 border-b border-gray-200 bg-white/80 backdrop-blur-md">
-        <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6">
-          <div className="flex items-center gap-2">
-            <div className="h-6 w-6 rounded-full bg-blue-600"></div>
-            <span className="text-xl font-bold tracking-tight">Vitto LMS</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="text-sm font-medium text-gray-600">{user.email}</span>
-            <Link href="/dashboard" className="text-sm font-medium text-blue-600 hover:text-blue-800">
-              Back to Dashboard
-            </Link>
-          </div>
-        </div>
-      </header>
+      <Navbar />
 
       {/* Main Content */}
       <main className="mx-auto max-w-5xl px-6 py-10">

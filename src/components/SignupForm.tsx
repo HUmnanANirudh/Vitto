@@ -6,19 +6,25 @@ import { createUserWithEmailAndPassword, updateProfile, signInWithPopup, GoogleA
 import { useRouter } from "next/navigation";
 import AuthForm from "./AuthForm";
 import { SignupSchema } from "@/types";
+import toast from "react-hot-toast";
+
+function formatAuthError(msg: string) {
+  if (msg.includes("auth/email-already-in-use")) return "Email already in use";
+  if (msg.includes("auth/invalid-email")) return "Invalid email address";
+  if (msg.includes("auth/weak-password")) return "Password is too weak";
+  return msg;
+}
 
 export default function SignupForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<{ name?: string; email?: string; password?: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
 
     const result = SignupSchema.safeParse({ name, email, password });
     if (!result.success) {
@@ -37,9 +43,10 @@ export default function SignupForm() {
     try {
       const userCred = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(userCred.user, { displayName: name });
+      toast.success("Account created successfully!");
       router.push("/dashboard");
     } catch (err: any) {
-      setError(err.message);
+      toast.error(formatAuthError(err.message));
       setIsSubmitting(false);
     }
   };
@@ -49,9 +56,10 @@ export default function SignupForm() {
     try {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
+      toast.success("Account created successfully!");
       router.push("/dashboard");
     } catch (err: any) {
-      setError(err.message);
+      toast.error(formatAuthError(err.message));
       setIsSubmitting(false);
     }
   };
@@ -60,7 +68,6 @@ export default function SignupForm() {
     <AuthForm
       title="Sign Up"
       buttonText="Create Account"
-      error={error}
       fieldErrors={fieldErrors}
       name={name}
       setName={setName}
