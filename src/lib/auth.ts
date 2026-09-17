@@ -29,7 +29,7 @@ export async function getAuthUser(req: Request) {
     }
 
     return User;
-  } catch {
-    throw new Error("Unauthorized: Invalid token");
+  } catch (e) {
+    console.error(e); throw new Error("Unauthorized: Invalid token");
   }
 }

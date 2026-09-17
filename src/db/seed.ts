@@ -1,11 +1,13 @@
 import { config } from "dotenv";
 config({ path: ".env" });
 
-import { drizzle } from "drizzle-orm/neon-http";
+import { Pool } from "@neondatabase/serverless";
+import { drizzle } from "drizzle-orm/neon-serverless";
 import { users, loans, installments } from "./schema";
 import { generateSchedule, calculateEMI } from "../lib/emi";
 
-const db = drizzle(process.env.DATABASE_URL!);
+const pool = new Pool({ connectionString: process.env.DATABASE_URL! });
+const db = drizzle({ client: pool });
 
 async function seed() {
   console.log("Seeding database...\n");
@@ -21,7 +23,7 @@ async function seed() {
   console.log(`User: ${user.name} <${user.email}>`);
   console.log(`ID: ${user.id}\n`);
 
-  // create reference loan
+  // reference loan
   const principalPaise = 200_000 * 100;
   const annualRate = 18.0;
   const tenureMonths = 24;
