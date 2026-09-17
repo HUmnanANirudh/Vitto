@@ -16,7 +16,10 @@ export default function AuthForm({
 }: AuthFormProps) {
   return (
     <div className="flex h-screen items-center justify-center bg-gray-50">
-      <form onSubmit={onSubmit} className="w-96 rounded-lg bg-white p-8 shadow-md text-gray-900">
+      <form
+        onSubmit={onSubmit}
+        className="w-96 rounded-lg bg-white p-8 shadow-md text-gray-900"
+      >
         <h1 className="mb-6 text-2xl font-bold">{title}</h1>
         {error && <div className="mb-4 text-sm text-red-500">{error}</div>}
         <input
@@ -35,11 +38,17 @@ export default function AuthForm({
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit" className="w-full rounded bg-blue-600 p-2 text-white">
+        <button
+          type="submit"
+          className="w-full rounded bg-blue-600 p-2 text-white"
+        >
           {buttonText}
         </button>
         <p className="mt-4 text-sm">
-          {altText} <Link href={altLinkHref} className="text-blue-600">{altLinkText}</Link>
+          {altText}{" "}
+          <Link href={altLinkHref} className="text-blue-600">
+            {altLinkText}
+          </Link>
         </p>
       </form>
     </div>

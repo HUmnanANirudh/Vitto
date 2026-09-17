@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Vitto Loan Repayment Service
 
-## Getting Started
+This is a Next.js application that creates loan repayment schedules, records payments, and calculates the current position of a loan.
 
-First, run the development server:
+## Setup Instructions
 
+Follow these steps to run the application on a clean machine:
+
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+2. **Configure environment:**
+   Create a `.env` file in the root directory. Copy the structure from `.env.example`.
+   *Note: Real values and test account credentials are provided in the submission email.*
+
+3. **Set up the database:**
+   Push the schema to your PostgreSQL database:
+   ```bash
+   npm run db:push
+   ```
+
+4. **Add test data:**
+   Create a demo loan and user to test the interface:
+   ```bash
+   npm run db:seed
+   ```
+
+5. **Start the application:**
+   ```bash
+   npm run dev
+   ```
+   Open `http://localhost:3000` in your browser. Sign in using the test account.
+
+## Running Tests
+
+Run the test suite with this single command:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run test
 ```
+This command runs unit tests for the math logic and integration tests against the live database.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Payment Allocation Rules
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+When you record a payment, the application allocates the money automatically. The system follows this exact order:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Oldest unpaid instalment first.**
+2. **Interest before principal** within that specific instalment.
 
-## Learn More
+### Cases Handled
 
-To learn more about Next.js, take a look at the following resources:
+*   **Underpayment:** The system pays the interest first. If any money remains, it pays down the principal. The rest of the instalment stays pending.
+*   **Overpayment:** The system settles the current instalment completely. It applies any leftover money to the next pending instalments in order. The API rejects payments that exceed the total outstanding balance of the loan. 
+*   **Late payment:** The waterfall logic naturally handles late payments by settling the oldest overdue instalments first. The system tracks the overdue amount but does not charge penalty interest.
+*   **Duplicate submission:** The system rejects exact duplicate payments. The database enforces a unique reference string for every payment.
+*   **Invalid input:** The system rejects negative amounts, zero-month tenures, and unknown loan IDs before they touch the database.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Technology Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*   **Framework:** Next.js (React)
+*   **Database:** PostgreSQL (Neon Serverless)
+*   **Data Access:** Drizzle ORM
+*   **Authentication:** Firebase Auth

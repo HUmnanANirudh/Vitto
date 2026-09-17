@@ -4,7 +4,7 @@ import { getAuthUser } from "@/lib/auth";
 
 export async function GET(
   req: Request,
-  { params }: { params: Promise<{ loanId: string }> }
+  { params }: { params: Promise<{ loanId: string }> },
 ) {
   try {
     await getAuthUser(req);
@@ -17,7 +17,8 @@ export async function GET(
 
     return NextResponse.json(result);
   } catch (error: any) {
-    if (error.message.startsWith("Unauthorized")) return NextResponse.json({ error: error.message }, { status: 401 });
+    if (error.message.startsWith("Unauthorized"))
+      return NextResponse.json({ error: error.message }, { status: 401 });
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

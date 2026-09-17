@@ -1,6 +1,7 @@
 import { InstallmentBalance, AllocationEntry } from "../types";
 
 //Incoming payment as oldest instalment first, interest before principal.
+
 export function allocatePayment(amountPaise: number, installments: InstallmentBalance[]): AllocationEntry[] {
   if (amountPaise <= 0) throw new Error("Payment amount must be positive");
 

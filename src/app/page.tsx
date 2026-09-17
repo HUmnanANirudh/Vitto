@@ -8,7 +8,8 @@ export default function Landing() {
           Vitto LMS
         </h1>
         <p className="mb-8 text-lg text-gray-600">
-          Loan Repayment Service for MSME Lending. Manage schedules, allocate payments, and track outstanding positions dynamically.
+          Loan Repayment Service for MSME Lending. Manage schedules, allocate
+          payments, and track outstanding positions dynamically.
         </p>
         <div className="flex justify-center gap-4">
           <Link

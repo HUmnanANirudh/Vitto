@@ -8,21 +8,26 @@ if (!getApps().length) {
 
 export async function getAuthUser(req: Request) {
   const authHeader = req.headers.get("Authorization");
-  if (!authHeader?.startsWith("Bearer ")) throw new Error("Unauthorized: Missing token");
+  if (!authHeader?.startsWith("Bearer "))
+    throw new Error("Unauthorized: Missing token");
 
   try {
-    const { uid: firebaseUid, email = "no-email", name = "User" } = await getAuth().verifyIdToken(authHeader.substring(7));
+    const {
+      uid: firebaseUid,
+      email = "no-email",
+      name = "User",
+    } = await getAuth().verifyIdToken(authHeader.substring(7));
 
     let User = await userRepository.getUserByFirebaseUid(firebaseUid);
-    
+
     if (!User) {
       User = await userRepository.upsertUser(
         firebaseUid,
         email,
-        name || email.split("@")[0]
+        name || email.split("@")[0],
       );
     }
-    
+
     return User;
   } catch {
     throw new Error("Unauthorized: Invalid token");

@@ -9,10 +9,10 @@ import ScheduleTable from "./ScheduleTable";
 
 export default function LoanDetailClient({ loanId }: { loanId: string }) {
   const { user, loading, getToken } = useAuth();
-  
+
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState("");
-  
+
   const [amount, setAmount] = useState("");
   const [paymentError, setPaymentError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -36,20 +36,20 @@ export default function LoanDetailClient({ loanId }: { loanId: string }) {
 
   useEffect(() => {
     if (user) loadLoan();
-  }, [user, loanId]); 
+  }, [user, loanId]);
 
   const handlePayment = async (e: React.FormEvent) => {
     e.preventDefault();
     setPaymentError("");
     setIsSubmitting(true);
-    
+
     try {
       const token = await getToken();
       const res = await fetch(`/api/loans/${loanId}/payments`, {
         method: "POST",
-        headers: { 
+        headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}` 
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           reference: crypto.randomUUID(),
@@ -57,12 +57,12 @@ export default function LoanDetailClient({ loanId }: { loanId: string }) {
           receivedAt: new Date().toISOString(),
         }),
       });
-      
+
       const resData = await res.json();
       if (!res.ok) throw new Error(resData.error || "Payment failed");
-      
+
       setAmount("");
-      await loadLoan(); 
+      await loadLoan();
     } catch (err: any) {
       setPaymentError(err.message);
     } finally {
@@ -70,7 +70,8 @@ export default function LoanDetailClient({ loanId }: { loanId: string }) {
     }
   };
 
-  if (loading || !user || (!data && !error)) return <div className="p-8">Loading...</div>;
+  if (loading || !user || (!data && !error))
+    return <div className="p-8">Loading...</div>;
   if (error) return <div className="p-8 text-red-500">{error}</div>;
 
   const { loan, position, installments } = data;
@@ -81,12 +82,14 @@ export default function LoanDetailClient({ loanId }: { loanId: string }) {
         <Link href="/dashboard" className="text-blue-600 hover:underline">
           &larr; Back to Dashboard
         </Link>
-        <h1 className="text-2xl font-bold font-mono">Loan: {loanId.split("-")[0]}</h1>
+        <h1 className="text-2xl font-bold font-mono">
+          Loan: {loanId.split("-")[0]}
+        </h1>
       </div>
 
       <PositionCards position={position} />
-      
-      <PaymentForm 
+
+      <PaymentForm
         amount={amount}
         setAmount={setAmount}
         onSubmit={handlePayment}

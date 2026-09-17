@@ -1,13 +1,3 @@
-/**
- * Seed script — creates demo data for development.
- *
- * Run: npx tsx src/db/seed.ts
- *
- * Creates:
- *   - 1 demo user (demo@vitto.com)
- *   - 1 reference loan: ₹2,00,000 at 18% p.a. over 24 months
- *   - Full repayment schedule (24 instalments)
- */
 import { config } from "dotenv";
 config({ path: ".env" });
 
@@ -18,9 +8,8 @@ import { generateSchedule, calculateEMI } from "../lib/emi";
 const db = drizzle(process.env.DATABASE_URL!);
 
 async function seed() {
-  console.log("🌱 Seeding database...\n");
+  console.log("Seeding database...\n");
 
-  // ── 1. Create demo user ──
   const [user] = await db
     .insert(users)
     .values({
@@ -29,11 +18,11 @@ async function seed() {
     })
     .returning();
 
-  console.log(`✅ User: ${user.name} <${user.email}>`);
-  console.log(`   ID: ${user.id}\n`);
+  console.log(`User: ${user.name} <${user.email}>`);
+  console.log(`ID: ${user.id}\n`);
 
-  // ── 2. Create reference loan ──
-  const principalPaise = 200_000 * 100; // ₹2,00,000
+  // create reference loan
+  const principalPaise = 200_000 * 100;
   const annualRate = 18.0;
   const tenureMonths = 24;
   const startDate = "2026-01-15";
@@ -51,12 +40,12 @@ async function seed() {
     .returning();
 
   console.log(
-    `✅ Loan: ₹${(principalPaise / 100).toLocaleString("en-IN")} @ ${annualRate}% for ${tenureMonths} months`
+    `Loan: ₹${(principalPaise / 100).toLocaleString("en-IN")} @ ${annualRate}% for ${tenureMonths} months`
   );
   console.log(`   ID: ${loan.id}`);
   console.log(`   Start: ${startDate}\n`);
 
-  // ── 3. Generate repayment schedule ──
+  // generate repayment schedule
   const schedule = generateSchedule(
     principalPaise,
     annualRate,
@@ -74,12 +63,12 @@ async function seed() {
     }))
   );
 
-  // ── 4. Print summary ──
+  // summary
   const emiPaise = calculateEMI(principalPaise, annualRate, tenureMonths);
   const totalPrincipal = schedule.reduce((s, e) => s + e.principalPaise, 0);
   const totalInterest = schedule.reduce((s, e) => s + e.interestPaise, 0);
 
-  console.log(`✅ Schedule: ${schedule.length} instalments generated`);
+  console.log(`Schedule: ${schedule.length} instalments generated`);
   console.log(
     `   EMI: ₹${(emiPaise / 100).toLocaleString("en-IN", { minimumFractionDigits: 2 })}`
   );
@@ -92,15 +81,15 @@ async function seed() {
     `   Total interest:  ₹${(totalInterest / 100).toLocaleString("en-IN", { minimumFractionDigits: 2 })}`
   );
   console.log(
-    `   Principal match: ${totalPrincipal === principalPaise ? "✅ exact" : "❌ MISMATCH"}`
+    `   Principal match: ${totalPrincipal === principalPaise ? "exact" : "MISMATCH"}`
   );
 
-  console.log("\n🎉 Seed complete!");
+  console.log("\n Seed complete!");
 }
 
 seed()
   .catch((err) => {
-    console.error("❌ Seed failed:", err);
+    console.error("Seed failed:", err);
     process.exit(1);
   })
   .then(() => process.exit(0));

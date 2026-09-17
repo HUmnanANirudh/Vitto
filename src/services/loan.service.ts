@@ -1,7 +1,11 @@
 import { loanRepository } from "@/repositories/loan.repository";
 import { generateSchedule } from "@/lib/emi";
 import { allocatePayment, totalOutstanding } from "@/lib/payment";
-import { InstallmentBalance, CreateLoanSchema, CreatePaymentSchema } from "@/types";
+import {
+  InstallmentBalance,
+  CreateLoanSchema,
+  CreatePaymentSchema,
+} from "@/types";
 
 export const loanService = {
   async createLoan(data: any) {

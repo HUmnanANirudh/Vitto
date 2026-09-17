@@ -23,14 +23,19 @@ export default function LoanListTable({ loans }: { loans: any[] }) {
             loans.map((loan) => (
               <tr key={loan.id} className="hover:bg-gray-50">
                 <td className="p-4 font-mono text-xs">{loan.id}</td>
-                <td className="p-4">₹{(loan.principalPaise / 100).toFixed(2)}</td>
+                <td className="p-4">
+                  ₹{(loan.principalPaise / 100).toFixed(2)}
+                </td>
                 <td className="p-4">
                   <span className="rounded-full bg-blue-100 px-2 py-1 text-xs text-blue-800">
                     {loan.status}
                   </span>
                 </td>
                 <td className="p-4">
-                  <Link href={`/dashboard/${loan.id}`} className="text-blue-600 hover:underline">
+                  <Link
+                    href={`/dashboard/${loan.id}`}
+                    className="text-blue-600 hover:underline"
+                  >
                     View Schedule
                   </Link>
                 </td>

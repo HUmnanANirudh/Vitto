@@ -11,7 +11,7 @@ export function calculateEMI(principalPaise: number, annualRate: number, tenureM
   return Math.round((principalPaise * r * pow) / (pow - 1));
 }
 
-// Generates the schedule. Final month absorbs rounding drift.
+// generates the schedule final month absorbs rounding drift.
 
 export function generateSchedule(
   principalPaise: number,
@@ -46,7 +46,7 @@ export function generateSchedule(
   return schedule;
 }
 
-//To add months to YYYY-MM-DD, capping to month end.
+// months to YYYY-MM-DD, capping to month end.
 
 export function addMonths(dateStr: string, months: number): string {
   const [y, m, d] = dateStr.split("-").map(Number);
