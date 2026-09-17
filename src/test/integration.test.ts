@@ -1,7 +1,10 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, afterAll } from 'vitest';
 import { POST as createLoan } from '@/app/api/loans/route';
 import { GET as getLoan } from '@/app/api/loans/[loanId]/route';
 import { POST as createPayment } from '@/app/api/loans/[loanId]/payments/route';
+import { db } from '@/db/drizzle';
+import { loans, installments, payments, paymentAllocations } from '@/db/schema';
+import { eq, inArray } from 'drizzle-orm';
 
 //to create mock Requests
 function mockRequest(method: string, body?: any, token: string | null = "valid-token") {
@@ -16,6 +19,18 @@ function mockRequest(method: string, body?: any, token: string | null = "valid-t
 
 describe('API Route Handlers Integration', () => {
   let testLoanId: string;
+
+  afterAll(async () => {
+    if (testLoanId) {
+      const pmts = await db.select({ id: payments.id }).from(payments).where(eq(payments.loanId, testLoanId));
+      if (pmts.length > 0) {
+        await db.delete(paymentAllocations).where(inArray(paymentAllocations.paymentId, pmts.map(p => p.id)));
+        await db.delete(payments).where(eq(payments.loanId, testLoanId));
+      }
+      await db.delete(installments).where(eq(installments.loanId, testLoanId));
+      await db.delete(loans).where(eq(loans.id, testLoanId));
+    }
+  });
 
   it('rejects unauthenticated requests', async () => {
     const req = mockRequest('POST', { principalPaise: 100000 }, null);
