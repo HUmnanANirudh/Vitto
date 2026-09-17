@@ -17,6 +17,10 @@ export const loanRepository = {
     return loan;
   },
 
+  async getAllLoans() {
+    return db.select().from(loans).orderBy(asc(loans.createdAt));
+  },
+
   async getInstallments(loanId: string) {
     return db.select().from(installments).where(eq(installments.loanId, loanId)).orderBy(asc(installments.installmentNumber));
   },

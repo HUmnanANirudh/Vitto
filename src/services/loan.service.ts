@@ -29,6 +29,10 @@ export const loanService = {
     );
   },
 
+  async getLoans() {
+    return loanRepository.getAllLoans();
+  },
+
   async getLoanDetails(loanId: string) {
     const [loan, insts, pmts] = await Promise.all([
       loanRepository.getLoan(loanId),

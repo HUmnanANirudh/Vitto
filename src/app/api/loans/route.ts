@@ -10,3 +10,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
 }
+
+export async function GET() {
+  try {
+    const loans = await loanService.getLoans();
+    return NextResponse.json(loans);
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
