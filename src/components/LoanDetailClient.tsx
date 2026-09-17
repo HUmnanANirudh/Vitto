@@ -70,35 +70,75 @@ export default function LoanDetailClient({ loanId }: { loanId: string }) {
     }
   };
 
-  if (loading || !user || (!data && !error))
-    return <div className="p-8">Loading...</div>;
-  if (error) return <div className="p-8 text-red-500">{error}</div>;
+  if (loading || !user || (!data && !error)) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gray-50">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-blue-600"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 p-8">
+        <div className="rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-600">
+          {error}
+        </div>
+      </div>
+    );
+  }
 
   const { loan, position, installments } = data;
 
   return (
-    <div className="mx-auto max-w-5xl p-8 text-gray-900">
-      <div className="mb-6 flex items-center justify-between">
-        <Link href="/dashboard" className="text-blue-600 hover:underline">
-          &larr; Back to Dashboard
-        </Link>
-        <h1 className="text-2xl font-bold font-mono">
-          Loan: {loanId.split("-")[0]}
-        </h1>
-      </div>
+    <div className="min-h-screen bg-gray-50 font-sans text-gray-900">
+      {/* Top Navigation */}
+      <header className="sticky top-0 z-10 border-b border-gray-200 bg-white/80 backdrop-blur-md">
+        <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6">
+          <div className="flex items-center gap-2">
+            <div className="h-6 w-6 rounded-full bg-blue-600"></div>
+            <span className="text-xl font-bold tracking-tight">Vitto LMS</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <span className="text-sm font-medium text-gray-600">{user.email}</span>
+            <Link href="/dashboard" className="text-sm font-medium text-blue-600 hover:text-blue-800">
+              Back to Dashboard
+            </Link>
+          </div>
+        </div>
+      </header>
 
-      <PositionCards position={position} />
+      {/* Main Content */}
+      <main className="mx-auto max-w-5xl px-6 py-10">
+        <div className="mb-8">
+          <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
+            <Link href="/dashboard" className="hover:text-gray-900 transition-colors">Dashboard</Link>
+            <span>/</span>
+            <span className="font-mono text-gray-900">{loanId.split("-")[0]}</span>
+          </div>
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900">
+            Loan Details
+          </h1>
+        </div>
 
-      <PaymentForm
-        amount={amount}
-        setAmount={setAmount}
-        onSubmit={handlePayment}
-        isSubmitting={isSubmitting}
-        isClosed={loan.status === "CLOSED"}
-        error={paymentError}
-      />
+        <PositionCards position={position} />
 
-      <ScheduleTable installments={installments} />
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+          <div className="lg:col-span-2">
+            <ScheduleTable installments={installments} />
+          </div>
+          <div className="lg:col-span-1">
+            <PaymentForm
+              amount={amount}
+              setAmount={setAmount}
+              onSubmit={handlePayment}
+              isSubmitting={isSubmitting}
+              isClosed={loan.status === "CLOSED"}
+              error={paymentError}
+            />
+          </div>
+        </div>
+      </main>
     </div>
   );
 }
