@@ -14,51 +14,51 @@ export const users = pgTable("users", {
   id: uuid("id").primaryKey().defaultRandom(),
   email: text("email").notNull().unique(),
   name: text("name").notNull(),
-  firebaseUid: text("firebase_uid").unique(),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  firebaseUid: text("firebaseUid").unique(),
+  createdAt: timestamp("createdAt", { withTimezone: true }).notNull().defaultNow(),
 });
 
 export const loans = pgTable("loans", {
   id: uuid("id").primaryKey().defaultRandom(),
-  userId: uuid("user_id").notNull().references(() => users.id),
-  principalPaise: bigint("principal_paise", { mode: "number" }).notNull(),
-  annualRate: numeric("annual_rate", { precision: 5, scale: 2 }).notNull(),
-  tenureMonths: integer("tenure_months").notNull(),
-  startDate: date("start_date", { mode: "string" }).notNull(),
+  userId: uuid("userId").notNull().references(() => users.id),
+  principalPaise: bigint("principalPaise", { mode: "number" }).notNull(),
+  annualRate: numeric("annualRate", { precision: 5, scale: 2 }).notNull(),
+  tenureMonths: integer("tenureMonths").notNull(),
+  startDate: date("startDate", { mode: "string" }).notNull(),
   status: text("status").notNull().default("ACTIVE"),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  createdAt: timestamp("createdAt", { withTimezone: true }).notNull().defaultNow(),
 });
 
 export const installments = pgTable(
   "installments",
   {
     id: uuid("id").primaryKey().defaultRandom(),
-    loanId: uuid("loan_id").notNull().references(() => loans.id),
-    installmentNumber: integer("installment_number").notNull(),
-    dueDate: date("due_date", { mode: "string" }).notNull(),
-    principalPaise: bigint("principal_paise", { mode: "number" }).notNull(),
-    interestPaise: bigint("interest_paise", { mode: "number" }).notNull(),
-    principalPaidPaise: bigint("principal_paid_paise", { mode: "number" }).notNull().default(0),
-    interestPaidPaise: bigint("interest_paid_paise", { mode: "number" }).notNull().default(0),
-    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    loanId: uuid("loanId").notNull().references(() => loans.id),
+    installmentNumber: integer("installmentNumber").notNull(),
+    dueDate: date("dueDate", { mode: "string" }).notNull(),
+    principalPaise: bigint("principalPaise", { mode: "number" }).notNull(),
+    interestPaise: bigint("interestPaise", { mode: "number" }).notNull(),
+    principalPaidPaise: bigint("principalPaidPaise", { mode: "number" }).notNull().default(0),
+    interestPaidPaise: bigint("interestPaidPaise", { mode: "number" }).notNull().default(0),
+    createdAt: timestamp("createdAt", { withTimezone: true }).notNull().defaultNow(),
   },
-  (table) => [unique("loan_installment_unique").on(table.loanId, table.installmentNumber)]
+  (table) => [unique("loanInstallmentUnique").on(table.loanId, table.installmentNumber)]
 );
 
 export const payments = pgTable("payments", {
   id: uuid("id").primaryKey().defaultRandom(),
-  loanId: uuid("loan_id").notNull().references(() => loans.id),
+  loanId: uuid("loanId").notNull().references(() => loans.id),
   reference: text("reference").notNull().unique(),
-  amountPaise: bigint("amount_paise", { mode: "number" }).notNull(),
-  receivedAt: timestamp("received_at", { withTimezone: true }).notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  amountPaise: bigint("amountPaise", { mode: "number" }).notNull(),
+  receivedAt: timestamp("receivedAt", { withTimezone: true }).notNull(),
+  createdAt: timestamp("createdAt", { withTimezone: true }).notNull().defaultNow(),
 });
 
-export const paymentAllocations = pgTable("payment_allocations", {
+export const paymentAllocations = pgTable("paymentAllocations", {
   id: uuid("id").primaryKey().defaultRandom(),
-  paymentId: uuid("payment_id").notNull().references(() => payments.id),
-  installmentId: uuid("installment_id").notNull().references(() => installments.id),
-  principalPaise: bigint("principal_paise", { mode: "number" }).notNull(),
-  interestPaise: bigint("interest_paise", { mode: "number" }).notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  paymentId: uuid("paymentId").notNull().references(() => payments.id),
+  installmentId: uuid("installmentId").notNull().references(() => installments.id),
+  principalPaise: bigint("principalPaise", { mode: "number" }).notNull(),
+  interestPaise: bigint("interestPaise", { mode: "number" }).notNull(),
+  createdAt: timestamp("createdAt", { withTimezone: true }).notNull().defaultNow(),
 });

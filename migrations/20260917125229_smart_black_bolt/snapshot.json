@@ -1,7 +1,7 @@
 {
   "version": "8",
   "dialect": "postgres",
-  "id": "2c53d185-97de-4f06-98dd-22630ce7ef92",
+  "id": "8cf9b790-600f-4107-bc7a-369ee6442271",
   "prevIds": [
     "00000000-0000-0000-0000-000000000000"
   ],
@@ -20,7 +20,7 @@
     },
     {
       "isRlsEnabled": false,
-      "name": "payment_allocations",
+      "name": "paymentAllocations",
       "entityType": "tables",
       "schema": "public"
     },
@@ -57,7 +57,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "loan_id",
+      "name": "loanId",
       "entityType": "columns",
       "schema": "public",
       "table": "installments"
@@ -70,7 +70,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "installment_number",
+      "name": "installmentNumber",
       "entityType": "columns",
       "schema": "public",
       "table": "installments"
@@ -83,7 +83,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "due_date",
+      "name": "dueDate",
       "entityType": "columns",
       "schema": "public",
       "table": "installments"
@@ -96,7 +96,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "principal_paise",
+      "name": "principalPaise",
       "entityType": "columns",
       "schema": "public",
       "table": "installments"
@@ -109,7 +109,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "interest_paise",
+      "name": "interestPaise",
       "entityType": "columns",
       "schema": "public",
       "table": "installments"
@@ -122,7 +122,7 @@
       "default": "0",
       "generated": null,
       "identity": null,
-      "name": "principal_paid_paise",
+      "name": "principalPaidPaise",
       "entityType": "columns",
       "schema": "public",
       "table": "installments"
@@ -135,7 +135,7 @@
       "default": "0",
       "generated": null,
       "identity": null,
-      "name": "interest_paid_paise",
+      "name": "interestPaidPaise",
       "entityType": "columns",
       "schema": "public",
       "table": "installments"
@@ -148,7 +148,7 @@
       "default": "now()",
       "generated": null,
       "identity": null,
-      "name": "created_at",
+      "name": "createdAt",
       "entityType": "columns",
       "schema": "public",
       "table": "installments"
@@ -174,7 +174,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "user_id",
+      "name": "userId",
       "entityType": "columns",
       "schema": "public",
       "table": "loans"
@@ -187,7 +187,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "principal_paise",
+      "name": "principalPaise",
       "entityType": "columns",
       "schema": "public",
       "table": "loans"
@@ -200,7 +200,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "annual_rate",
+      "name": "annualRate",
       "entityType": "columns",
       "schema": "public",
       "table": "loans"
@@ -213,7 +213,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "tenure_months",
+      "name": "tenureMonths",
       "entityType": "columns",
       "schema": "public",
       "table": "loans"
@@ -226,7 +226,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "start_date",
+      "name": "startDate",
       "entityType": "columns",
       "schema": "public",
       "table": "loans"
@@ -252,7 +252,7 @@
       "default": "now()",
       "generated": null,
       "identity": null,
-      "name": "created_at",
+      "name": "createdAt",
       "entityType": "columns",
       "schema": "public",
       "table": "loans"
@@ -268,7 +268,7 @@
       "name": "id",
       "entityType": "columns",
       "schema": "public",
-      "table": "payment_allocations"
+      "table": "paymentAllocations"
     },
     {
       "type": "uuid",
@@ -278,10 +278,10 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "payment_id",
+      "name": "paymentId",
       "entityType": "columns",
       "schema": "public",
-      "table": "payment_allocations"
+      "table": "paymentAllocations"
     },
     {
       "type": "uuid",
@@ -291,10 +291,10 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "installment_id",
+      "name": "installmentId",
       "entityType": "columns",
       "schema": "public",
-      "table": "payment_allocations"
+      "table": "paymentAllocations"
     },
     {
       "type": "bigint",
@@ -304,10 +304,10 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "principal_paise",
+      "name": "principalPaise",
       "entityType": "columns",
       "schema": "public",
-      "table": "payment_allocations"
+      "table": "paymentAllocations"
     },
     {
       "type": "bigint",
@@ -317,10 +317,10 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "interest_paise",
+      "name": "interestPaise",
       "entityType": "columns",
       "schema": "public",
-      "table": "payment_allocations"
+      "table": "paymentAllocations"
     },
     {
       "type": "timestamp with time zone",
@@ -330,10 +330,10 @@
       "default": "now()",
       "generated": null,
       "identity": null,
-      "name": "created_at",
+      "name": "createdAt",
       "entityType": "columns",
       "schema": "public",
-      "table": "payment_allocations"
+      "table": "paymentAllocations"
     },
     {
       "type": "uuid",
@@ -356,7 +356,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "loan_id",
+      "name": "loanId",
       "entityType": "columns",
       "schema": "public",
       "table": "payments"
@@ -382,7 +382,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "amount_paise",
+      "name": "amountPaise",
       "entityType": "columns",
       "schema": "public",
       "table": "payments"
@@ -395,7 +395,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "received_at",
+      "name": "receivedAt",
       "entityType": "columns",
       "schema": "public",
       "table": "payments"
@@ -408,7 +408,7 @@
       "default": "now()",
       "generated": null,
       "identity": null,
-      "name": "created_at",
+      "name": "createdAt",
       "entityType": "columns",
       "schema": "public",
       "table": "payments"
@@ -460,7 +460,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "firebase_uid",
+      "name": "firebaseUid",
       "entityType": "columns",
       "schema": "public",
       "table": "users"
@@ -473,7 +473,7 @@
       "default": "now()",
       "generated": null,
       "identity": null,
-      "name": "created_at",
+      "name": "createdAt",
       "entityType": "columns",
       "schema": "public",
       "table": "users"
@@ -481,7 +481,7 @@
     {
       "nameExplicit": false,
       "columns": [
-        "loan_id"
+        "loanId"
       ],
       "schemaTo": "public",
       "tableTo": "loans",
@@ -490,7 +490,7 @@
       ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
-      "name": "installments_loan_id_loans_id_fkey",
+      "name": "installments_loanId_loans_id_fkey",
       "entityType": "fks",
       "schema": "public",
       "table": "installments"
@@ -498,7 +498,7 @@
     {
       "nameExplicit": false,
       "columns": [
-        "user_id"
+        "userId"
       ],
       "schemaTo": "public",
       "tableTo": "users",
@@ -507,7 +507,7 @@
       ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
-      "name": "loans_user_id_users_id_fkey",
+      "name": "loans_userId_users_id_fkey",
       "entityType": "fks",
       "schema": "public",
       "table": "loans"
@@ -515,7 +515,7 @@
     {
       "nameExplicit": false,
       "columns": [
-        "payment_id"
+        "paymentId"
       ],
       "schemaTo": "public",
       "tableTo": "payments",
@@ -524,15 +524,15 @@
       ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
-      "name": "payment_allocations_payment_id_payments_id_fkey",
+      "name": "paymentAllocations_paymentId_payments_id_fkey",
       "entityType": "fks",
       "schema": "public",
-      "table": "payment_allocations"
+      "table": "paymentAllocations"
     },
     {
       "nameExplicit": false,
       "columns": [
-        "installment_id"
+        "installmentId"
       ],
       "schemaTo": "public",
       "tableTo": "installments",
@@ -541,15 +541,15 @@
       ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
-      "name": "payment_allocations_installment_id_installments_id_fkey",
+      "name": "paymentAllocations_installmentId_installments_id_fkey",
       "entityType": "fks",
       "schema": "public",
-      "table": "payment_allocations"
+      "table": "paymentAllocations"
     },
     {
       "nameExplicit": false,
       "columns": [
-        "loan_id"
+        "loanId"
       ],
       "schemaTo": "public",
       "tableTo": "loans",
@@ -558,7 +558,7 @@
       ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
-      "name": "payments_loan_id_loans_id_fkey",
+      "name": "payments_loanId_loans_id_fkey",
       "entityType": "fks",
       "schema": "public",
       "table": "payments"
@@ -588,9 +588,9 @@
         "id"
       ],
       "nameExplicit": false,
-      "name": "payment_allocations_pkey",
+      "name": "paymentAllocations_pkey",
       "schema": "public",
-      "table": "payment_allocations",
+      "table": "paymentAllocations",
       "entityType": "pks"
     },
     {
@@ -616,11 +616,11 @@
     {
       "nameExplicit": true,
       "columns": [
-        "loan_id",
-        "installment_number"
+        "loanId",
+        "installmentNumber"
       ],
       "nullsNotDistinct": false,
-      "name": "loan_installment_unique",
+      "name": "loanInstallmentUnique",
       "entityType": "uniques",
       "schema": "public",
       "table": "installments"
@@ -650,10 +650,10 @@
     {
       "nameExplicit": false,
       "columns": [
-        "firebase_uid"
+        "firebaseUid"
       ],
       "nullsNotDistinct": false,
-      "name": "users_firebase_uid_key",
+      "name": "users_firebaseUid_key",
       "schema": "public",
       "table": "users",
       "entityType": "uniques"
