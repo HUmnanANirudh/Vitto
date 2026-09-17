@@ -2,6 +2,9 @@
 
 This is a Next.js application that creates loan repayment schedules, records payments, and calculates the current position of a loan.
 
+<img width="1872" height="880" alt="image" src="https://github.com/user-attachments/assets/5e3c9b30-3e32-4aa2-8f1a-037a3a920ec7" />
+
+
 ## Setup Instructions
 
 Follow these steps to run the application on a clean machine:
