@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export interface ScheduleEntry {
   installmentNumber: number;
   dueDate: string;
@@ -20,3 +22,20 @@ export interface AllocationEntry {
   interestPaise: number;
   principalPaise: number;
 }
+
+export const CreateLoanSchema = z.object({
+  principalPaise: z.number().int().min(50000_00).max(1000000_00),
+  annualRate: z.number().min(0).max(100),
+  tenureMonths: z.number().int().min(3).max(36),
+  startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Format: YYYY-MM-DD"),
+});
+
+export type CreateLoanInput = z.infer<typeof CreateLoanSchema>;
+
+export const CreatePaymentSchema = z.object({
+  reference: z.string().min(1),
+  amountPaise: z.number().int().positive(),
+  receivedAt: z.string().datetime(),
+});
+
+export type CreatePaymentInput = z.infer<typeof CreatePaymentSchema>;
