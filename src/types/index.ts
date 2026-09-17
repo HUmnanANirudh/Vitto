@@ -39,3 +39,26 @@ export const CreatePaymentSchema = z.object({
 });
 
 export type CreatePaymentInput = z.infer<typeof CreatePaymentSchema>;
+
+export interface AuthFormProps {
+  title: string;
+  buttonText: string;
+  error: string;
+  email: string;
+  setEmail: (v: string) => void;
+  password: string;
+  setPassword: (v: string) => void;
+  onSubmit: (e: React.FormEvent) => void;
+  altText: string;
+  altLinkText: string;
+  altLinkHref: string;
+}
+
+export interface PaymentFormProps {
+  amount: string;
+  setAmount: (v: string) => void;
+  onSubmit: (e: React.FormEvent) => void;
+  isSubmitting: boolean;
+  isClosed: boolean;
+  error: string;
+}
