@@ -3,7 +3,7 @@ import { POST as createLoan } from '@/app/api/loans/route';
 import { GET as getLoan } from '@/app/api/loans/[loanId]/route';
 import { POST as createPayment } from '@/app/api/loans/[loanId]/payments/route';
 
-// We need a helper to create mock Requests
+//to create mock Requests
 function mockRequest(method: string, body?: any, token: string | null = "valid-token") {
   const headers = new Headers();
   if (token) headers.set('Authorization', `Bearer ${token}`);
@@ -43,17 +43,17 @@ describe('API Route Handlers Integration', () => {
   });
 
   it('success path: retrieves loan and processes payment', async () => {
-    // 1. Get loan
+    //loan
     const getReq = mockRequest('GET');
     const getRes = await getLoan(getReq, { params: Promise.resolve({ loanId: testLoanId }) });
     expect(getRes.status).toBe(200);
     const loanData = await getRes.json();
     
-    // First installment total due
+    //installment total due
     const firstInstalment = loanData.installments[0];
     const emi = firstInstalment.principalPaise + firstInstalment.interestPaise;
     
-    // 2. Make a payment
+    //make a payment
     const paymentReq = mockRequest('POST', {
       amountPaise: emi,
       receivedAt: '2026-06-01T10:00:00Z',
@@ -80,9 +80,9 @@ describe('API Route Handlers Integration', () => {
     const req2 = mockRequest('POST', {
       amountPaise: 1000,
       receivedAt: '2026-06-02T10:00:00Z',
-      reference: ref // Same ref
+      reference: ref
     });
     const res2 = await createPayment(req2, { params: Promise.resolve({ loanId: testLoanId }) });
-    expect(res2.status).toBe(400); // Fails
+    expect(res2.status).toBe(400);
   });
 });
