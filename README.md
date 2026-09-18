@@ -33,9 +33,7 @@ Follow these steps to run the application on a clean machine:
    ```bash
    npm run dev
    ```
-   Open `http://localhost:3000` in your browser. Sign in using the test account:
-   - **Email:** `demo@vitto.com`
-   - **Password:** `password123`
+   Open `http://localhost:3000` in your browser.
 
 ## Running Tests
 
